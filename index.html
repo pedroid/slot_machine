@@ -1,0 +1,128 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>OOPs</title>
+<style>
+body {
+	font-family:verdana,arial;
+	background-color:black;
+}
+.bd {
+	
+	position:relative;
+	margin-top:0%;
+	
+}
+.deco{
+	background-color:black;
+}
+.container {
+	margin:0 auto;
+	width:608px;
+	left:50%;	
+	
+}
+.slot-wrapper {
+	background-color:black;
+	 border: 1px solid #000000;
+}
+.slot {
+	background:url("images/reel_normal.png") repeat-y; /*Taken from http://www.swish-designs.co.uk*/
+	width:200px;
+	height:200px;
+	float:left;
+	border:1px solid #000;
+	background-position:0 4px;
+}
+.motion {
+	background:url("images/reel_normal.png") repeat-y; 
+}
+button {
+	display:block;
+	width:138px;
+	height:33px;
+	margin:20px 60px;
+	font-size:16px;
+	cursor:pointer;
+}
+
+.credits {
+	font-size:15px;
+	margin-top:20px;
+}
+.credits .browsers {
+	font-style:italic;
+	font-size:14px;
+	color:#777;
+	margin-top:4px;
+}
+.clear {
+	clear:both;
+}
+.bg{
+	position:relative;
+	margin-top:5%;
+}
+.bg img{
+	width:1200px;	
+	position:relative;
+	left:10%;
+	z-index: -1;
+}
+
+.bg_top{
+	position:relative;
+}
+
+.info{
+	position:absolute;
+	left:400px;
+	top:40px;
+	font-size:150%;
+}
+
+#num{
+	font-size:150%;
+	width:20%;
+}
+.deco{
+	position:absolute;
+	top:130px;
+	left:350px;
+	z-index: 0;
+	
+}
+</style>
+<script src="jquery.min.js"></script>
+
+<script src="jquery.spritely.js"></script>
+<script src="jquery.backgroundPosition.js"></script>
+<script src="slot.js"></script>
+</head>
+
+<body>
+<div class="deco"><img src="images/HipHop.gif"/></div>
+<div class="bg_top">
+<div class="bg">
+
+<img src="images/bg.png"/>
+</div>
+</div>
+
+<div class="bd">
+	
+
+	<div class="container">
+		<div class="slot-wrapper">
+			<div id="slot1" class="slot"></div>
+			<div id="slot2" class="slot"></div>
+			<div id="slot3" class="slot"></div>
+			<div class="clear"></div>
+		</div>		
+		<div><button id="control">Start</button></div>
+	</div>
+
+</div>
+</body>
+</html>
