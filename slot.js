@@ -150,7 +150,7 @@ $(document).ready(function() {
     Slot.prototype.reset = function() {
         var el_id = $(this.el).attr('id');
         $._spritely.instances[el_id].t = 0;
-        $(this.el).css('background-position', '0px 35px');
+        $(this.el).css('background-position', '0px 210px');
         this.speed = 0;
         completed = 0;
         $('#result').html('');
@@ -169,6 +169,9 @@ $(document).ready(function() {
     var a = new Slot('#slot1', 40, 3),
         b = new Slot('#slot2', 70, 3),
         c = new Slot('#slot3', 120, 3);
+		a.reset();
+		b.reset();
+		c.reset();
 
     /**
     * Slot machine controller
@@ -178,7 +181,7 @@ $(document).ready(function() {
 		if(flag_state=="Idle"){
 			flag_state = "Run";
 			console.log("start");
-        //if(this.innerHTML == "Start") {
+        //if(this.innerHTML == "Start") {			
             a.start();
             b.start();
             c.start();
@@ -256,6 +259,7 @@ $(document).ready(function() {
 				a.reset();
 				b.reset();
 				c.reset();
+
 				$('.fireworks').hide();
 				$('.deco').hide();
 				$('#text').hide();
