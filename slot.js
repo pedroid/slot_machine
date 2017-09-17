@@ -2,6 +2,7 @@ $(document).ready(function() {
     /**
     * Global variables
     */
+	flag_state = "Idle";
     var completed = 0,
         imgHeight = 1374,
         posArr = [
@@ -149,7 +150,7 @@ $(document).ready(function() {
     Slot.prototype.reset = function() {
         var el_id = $(this.el).attr('id');
         $._spritely.instances[el_id].t = 0;
-        $(this.el).css('background-position', '0px 4px');
+        $(this.el).css('background-position', '0px 35px');
         this.speed = 0;
         completed = 0;
         $('#result').html('');
@@ -167,19 +168,22 @@ $(document).ready(function() {
     //create slot objects
     var a = new Slot('#slot1', 40, 3),
         b = new Slot('#slot2', 70, 3),
-        c = new Slot('#slot3', 100, 3);
+        c = new Slot('#slot3', 120, 3);
 
     /**
     * Slot machine controller
     */
     $('#control').click(function() {
         var x;
-        if(this.innerHTML == "Start") {
+		if(flag_state=="Idle"){
+			flag_state = "Run";
+			console.log("start");
+        //if(this.innerHTML == "Start") {
             a.start();
             b.start();
             c.start();
-            this.innerHTML = "Stop";
-            
+            this.innerHTML = "Stop";            
+			$("#control").attr("src","images/go_button.png");
             disableControl(); //disable control until the slots reach max speed
             
             //check every 100ms if slots have reached max speed 
@@ -188,55 +192,79 @@ $(document).ready(function() {
                 if(a.speed >= a.maxSpeed && b.speed >= b.maxSpeed && c.speed >= c.maxSpeed) {
                     enableControl();
                     window.clearInterval(x);
+					//test
+					$('#text').html("<<< 大 獎 正 在 開 出 >>>");
+					$('#text').show();
+					var random_var = Math.floor(Math.random()*600+1);
+					console.log(random_var);
+					var hund = Math.floor(random_var/100);
+					random_var = random_var - hund*100;
+					var ten = Math.floor(random_var/10);
+					random_var = random_var - ten*10;
+					var one = Math.floor(random_var);
+					var pixel_array=[];
+					pixel_array = ["210", "35", "1555", "1380", "1210", "1040", "870", "700", "535", "360"]; //3:1380
+					a.stop();
+					b.stop();
+					c.stop();
+					this.innerHTML = "Reset";
+					//flag_state = "Reset";
+					
+					disableControl(); //disable control until the slots stop
+					
+					//check every 100ms if slots have stopped
+					//if so, enable the control
+					x = window.setInterval(function() {
+						//85px: 9, 160: 8, 237: 7, 320:6, 405: 5, 485:4, 560:3, 630:2, 700:1"
+
+						if(a.speed === 0){
+							
+							$('#slot1').css("background-position", "0px "+ pixel_array[hund] +"px");
+							//console.log("slot1:"+ hund);
+						}
+						if(b.speed === 0){
+							$('#slot2').css("background-position", "0px "+ pixel_array[ten] +"px");
+							//console.log("slot2:"+ ten);
+						}
+						if(c.speed === 0){
+							$('#slot3').css("background-position", "0px "+ pixel_array[one] +"px");
+							//console.log("slot3:"+ one);
+						}
+						if(a.speed === 0 && b.speed === 0 && c.speed === 0 && completed === 3) {
+							enableControl();
+							window.clearInterval(x);
+							setTimeout(function(){
+									$('.fireworks').show();							
+									$('.deco').show();
+									$("#control").attr("src","images/reset_button.png");
+									$('#text').html("<<< 恭 喜 這 位 幸 運 得 主 >>>");
+									flag_state="Reset";
+							}, 800);
+
+						}
+					}, 50);		
+					//test
                 }
             }, 100);
-        } else if(this.innerHTML == "Stop") {
-			var random_var = Math.floor(Math.random()*600+1);
-			var hund = Math.floor(random_var/100);
-			random_var = random_var - hund*100;
-			var ten = Math.floor(random_var/10);
-			random_var = random_var - ten*10;
-			var one = Math.floor(random_var);
-			var pixel_array=[];
-			pixel_array = ["35", "1380", "1380", "1210", "1040", "870", "700", "520", "350", "200"];
-            a.stop();
-            b.stop();
-            c.stop();
-            this.innerHTML = "Reset";
-
-            disableControl(); //disable control until the slots stop
-            
-            //check every 100ms if slots have stopped
-            //if so, enable the control
-            x = window.setInterval(function() {
-				//85px: 9, 160: 8, 237: 7, 320:6, 405: 5, 485:4, 560:3, 630:2, 700:1"
-
-				if(a.speed === 0){
-					
-					$('#slot1').css("background-position", "0px "+ pixel_array[hund] +"px");
-					//console.log("slot1:"+ hund);
-				}
-				if(b.speed === 0){
-					$('#slot2').css("background-position", "0px "+ pixel_array[ten] +"px");
-					//console.log("slot2:"+ ten);
-				}
-				if(c.speed === 0){
-					$('#slot3').css("background-position", "0px "+ pixel_array[one] +"px");
-					//console.log("slot3:"+ one);
-				}
-                if(a.speed === 0 && b.speed === 0 && c.speed === 0 && completed === 3) {
-                    enableControl();
-                    window.clearInterval(x);
-					
-                }
-            }, 50);			
+        //} else if(this.innerHTML == "Stop") {
+		}else { //reset
 			
-			
-        } else { //reset
-            a.reset();
-            b.reset();
-            c.reset();
-            this.innerHTML = "Start";
+			if(flag_state=="Idle"){
+				
+			}else if(flag_state=="Reset"){
+				console.log("reset when idle");
+				a.reset();
+				b.reset();
+				c.reset();
+				$('.fireworks').hide();
+				$('.deco').hide();
+				$('#text').hide();
+				this.innerHTML = "Start";
+				flag_state = "Idle";
+				$("#control").attr("src","images/start_button.png");
+			}else{
+				console.log("reset sometime");
+			}
         }
     });
 });

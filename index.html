@@ -38,13 +38,20 @@ body {
 .motion {
 	background:url("images/reel_normal.png") repeat-y; 
 }
+
+.button{
+	position:absolute;
+	right:100px;	
+	top:0px;
+}
+
 button {
 	display:block;
 	width:138px;
 	height:33px;
 	margin:20px 60px;
 	font-size:16px;
-	cursor:pointer;
+	cursor:pointer;	
 }
 
 .credits {
@@ -88,11 +95,40 @@ button {
 }
 .deco{
 	position:absolute;
-	top:130px;
-	left:350px;
+	top:0px;
+	left:120px;
 	z-index: 0;
+	display:none;
 	
 }
+.fireworks{
+	position:absolute;	
+	top:10px;
+	display:none;
+}
+
+#left_firework{
+	left:200px;
+}
+
+#right_firework{
+	right:200px;
+}
+
+.container button{
+	display:none;
+} 
+
+#control:hover{
+	cursor:pointer;
+}
+
+#text{
+	color:white;
+	text-align:center;
+	display:none;
+}
+
 </style>
 <script src="jquery.min.js"></script>
 
@@ -102,7 +138,8 @@ button {
 </head>
 
 <body>
-<div class="deco"><img src="images/HipHop.gif"/></div>
+<div class="fireworks" id="left_firework"><img src="images/fireworks.gif"/></div>
+
 <div class="bg_top">
 <div class="bg">
 
@@ -111,7 +148,7 @@ button {
 </div>
 
 <div class="bd">
-	
+	<div class="deco"><img src="images/HipHop.gif"/></div>
 
 	<div class="container">
 		<div class="slot-wrapper">
@@ -120,9 +157,16 @@ button {
 			<div id="slot3" class="slot"></div>
 			<div class="clear"></div>
 		</div>		
-		<div><button id="control">Start</button></div>
-	</div>
+		<div><button >Start</button></div>
 
+	</div>
+	<div class="button"  >
+			<img id="control" src="images/start_button.png"/>			
+	</div>
+	<div id="text">
+	<<< 大 獎 正 在 開 出 >>>
+	</div>
 </div>
+
 </body>
 </html>
